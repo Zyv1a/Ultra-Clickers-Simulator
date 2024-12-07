@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Site officiel du jeu Ultra Clickers Simulator sur Roblox. Rejoignez l'aventure et cliquez pour gagner!">
+    <title>Ultra Clickers Simulator - Roblox</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #000000;
+            color: #33ff33;
+            padding: 40px 20px;
+            border-bottom: 3px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            flex: 1;
+        }
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #33ff33;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .back-home:hover {
+            color: #ff6600;
+        }
+        .login-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .login-icon:hover {
+            transform: scale(1.1);
+        }
+        .content {
+            padding: 40px 20px;
+            flex: 1;
+        }
+        .game-description {
+            background-color: #2a2a2a;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+        .cta-button {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 18px 36px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .cta-button:hover {
+            background-color: #e65c00;
+        }
+        footer {
+            background-color: #000000;
+            color: #33ff33;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-home">&#8962; Accueil</a>
+        <h1>Ultra Clickers Simulator</h1>
+        <a href="user-info.html">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Roblox_Logo_2017.png" alt="Roblox Logo" class="login-icon">
+        </a>
+    </header>
+
+    <div class="content">
+        <section class="game-description">
+            <h2>Qu'est-ce que Ultra Clickers Simulator ?</h2>
+            <p>Ultra Clickers Simulator est un jeu passionnant où chaque clic vous permet de gagner des ressources et d'améliorer votre personnage. Débloquez des récompenses, affrontez des défis et devenez le maître des clics !</p>
+        </section>
+
+        <section>
+            <h2>Rejoignez-nous sur Roblox</h2>
+            <p>Prêt à rejoindre l'aventure ? Cliquez sur le lien ci-dessous pour accéder à Ultra Clickers Simulator sur Roblox et commencer à jouer !</p>
+            <a href="https://www.roblox.com/fr/games/17215465269/Winter-Ultra-Clickers-Simulator" class="cta-button" target="_blank">Jouer Maintenant</a>
+        </section>
+
+        <section>
+            <h2>Important</h2>
+            <p>Veuillez consulter nos <a href="privacy-policy.html" style="color: #33ff33;">Politique de Confidentialité</a> et nos <a href="terms-of-service.html" style="color: #33ff33;">Conditions d'Utilisation</a> pour plus d'informations.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Ultra Clickers Simulator | Tous droits réservés</p>
+    </footer>
+
+    <script>
+        // Simuler la connexion : changer l'icône en lien
+        var isLoggedIn = true;  // Remplacer cette variable par l'authentification réelle
+
+        if (isLoggedIn) {
+            document.querySelector('.login-icon').src = "https://upload.wikimedia.org/wikipedia/commons/4/4f/Roblox_Icon_2021.png";  // Nouveau logo pour "connecté"
+        }
+    </script>
+
+</body>
+</html>
