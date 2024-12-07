@@ -20,11 +20,24 @@
             color: #33ff33;
             text-align: center;
             padding: 40px 20px;
+            position: relative;
         }
         header h1 {
             margin: 0;
             font-size: 48px;
             font-weight: bold;
+        }
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #33ff33;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .back-home:hover {
+            color: #ff6600;
         }
         .content {
             padding: 40px 20px;
@@ -40,6 +53,7 @@
 <body>
 
     <header>
+        <a href="index.html" class="back-home">&#8962; Accueil</a>
         <h1>Conditions d'Utilisation</h1>
     </header>
 
