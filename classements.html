@@ -188,14 +188,38 @@
         };
 
         ws.onmessage = function(event) {
-            const leaderboardData = JSON.parse(event.data);  // Récupérer les données envoyées
-            updateLeaderboardData(leaderboardData);  // Mettre à jour les tableaux avec les nouvelles données
+            try {
+                const leaderboardData = JSON.parse(event.data);  // Récupérer les données envoyées
+                console.log("Données reçues : ", leaderboardData);  // Affiche les données reçues
+                if (leaderboardData && leaderboardData.clicks && leaderboardData.rebirths && leaderboardData.eggs) {
+                    updateLeaderboardData(leaderboardData);  // Mettre à jour les tableaux avec les nouvelles données
+                } else {
+                    console.error("Les données reçues ne contiennent pas les informations attendues.");
+                }
+            } catch (error) {
+                console.error("Erreur lors de la réception des données WebSocket : ", error);
+            }
         };
 
         function updateLeaderboardData(data) {
-            updateLeaderboardTable('click-leaderboard', data.clicks);
-            updateLeaderboardTable('rebirth-leaderboard', data.rebirths);
-            updateLeaderboardTable('eggs-leaderboard', data.eggs);
+            // Vérifier que les données sont valides avant de les envoyer à la fonction
+            if (Array.isArray(data.clicks)) {
+                updateLeaderboardTable('click-leaderboard', data.clicks);
+            } else {
+                console.error("Les données des clics sont manquantes ou mal formatées.");
+            }
+
+            if (Array.isArray(data.rebirths)) {
+                updateLeaderboardTable('rebirth-leaderboard', data.rebirths);
+            } else {
+                console.error("Les données des rebirths sont manquantes ou mal formatées.");
+            }
+
+            if (Array.isArray(data.eggs)) {
+                updateLeaderboardTable('eggs-leaderboard', data.eggs);
+            } else {
+                console.error("Les données des œufs sont manquantes ou mal formatées.");
+            }
         }
 
         function updateLeaderboardTable(leaderboardId, leaderboardData) {
