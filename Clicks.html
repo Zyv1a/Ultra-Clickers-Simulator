@@ -91,11 +91,22 @@
         section h2 {
             color: #ff6600; /* Changement de couleur des gros titres */
         }
+        .category-section {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .category-text {
+            text-align: left;
+            max-width: 300px;
+        }
         .buttons-section {
             display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
         }
         .button-wrapper {
             text-align: center;
@@ -131,16 +142,22 @@
             <p>Ultra Clickers Simulator est un jeu passionnant où chaque clic vous permet de gagner des ressources et d'améliorer votre personnage. Débloquez des récompenses, affrontez des défis et devenez le maître des clics !</p>
         </section>
 
-        <div class="buttons-section">
-            <div class="button-wrapper">
-                <p>Consultez les valeurs des pets et leur prix :</p>
-                <a href="values-pets.html" class="cta-button">Valeurs</a>
+        <section class="category-section">
+            <div class="category-text">
+                <h2>Catégories</h2>
+                <p>Découvrez les différentes sections utiles pour améliorer votre expérience de jeu :</p>
             </div>
-            <div class="button-wrapper">
-                <p>Découvrez chaque classement :</p>
-                <a href="classements.html" class="cta-button">Classements</a>
+            <div class="buttons-section">
+                <div class="button-wrapper">
+                    <p>Consultez les valeurs des pets et leur prix :</p>
+                    <a href="values-pets.html" class="cta-button">Valeurs</a>
+                </div>
+                <div class="button-wrapper">
+                    <p>Découvrez chaque classement :</p>
+                    <a href="classements.html" class="cta-button">Classements</a>
+                </div>
             </div>
-        </div>
+        </section>
 
         <section>
             <h2>Important</h2>
@@ -164,4 +181,3 @@
 
 </body>
 </html>
-
