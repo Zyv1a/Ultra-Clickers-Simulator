@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Effectuez le paiement de votre commande sur Ultra Clickers Simulator.">
+    <title>Passer à l'achat - Ultra Clickers Simulator</title>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #000000;
+            color: #33ff33;
+            padding: 40px 20px;
+            border-bottom: 3px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .back-home {
+            font-size: 20px;
+            color: #33ff33;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .back-home:hover {
+            color: #ff6600;
+        }
+        .cart-icon {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+        .content {
+            padding: 40px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .cart-items {
+            background-color: #2a2a2a;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .cart-items h2 {
+            color: #ff6600;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #444;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .cart-item p {
+            margin: 0;
+        }
+        .total {
+            text-align: right;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .checkout-button {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-top: 40px;
+        }
+        .checkout-button:hover {
+            background-color: #e65c00;
+        }
+        footer {
+            background-color: #000000;
+            color: #33ff33;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+            margin-top: auto;
+        }
+        .payment-method {
+            background-color: #2a2a2a;
+            padding: 30px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 30px;
+        }
+        .payment-method label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .payment-method input,
+        .payment-method select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 8px;
+        }
+        .payment-method input:focus,
+        .payment-method select:focus {
+            border-color: #ff6600;
+        }
+        #payment-details {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="back-home">&#8962; Accueil</a>
+    <h1>Passer à l'achat</h1>
+    <a href="cart.html">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Shopping_cart_font_awesome.svg" alt="Panier" class="cart-icon">
+    </a>
+</header>
+
+<div class="content">
+    <section class="cart-items">
+        <h2>Articles dans votre panier :</h2>
+        <div id="cart-items-list"></div>
+        <p class="total">Total : <span id="total-price">0</span> Robux</p>
+    </section>
+
+    <form id="payment-form" class="payment-method">
+        <h3>Informations de paiement</h3>
+        <label for="user-name">Nom :</label>
+        <input type="text" id="user-name" placeholder="Entrez votre nom" required><br>
+        
+        <label for="user-email">Email :</label>
+        <input type="email" id="user-email" placeholder="Entrez votre email" required><br>
+        
+        <label for="user-roblox-username">Pseudo Roblox :</label>
+        <input type="text" id="user-roblox-username" placeholder="Entrez votre pseudo Roblox" required><br>
+        
+        <label for="user-payment">Choisissez votre mode de paiement :</label>
+        <select id="user-payment" required>
+            <option value="credit-card">Carte de crédit</option>
+            <option value="paypal">PayPal</option>
+            <option value="bitcoin">Bitcoin</option>
+            <option value="bancontact">Bancontact</option>
+        </select><br>
+        
+        <div id="payment-details"></div>
+        
+        <button type="submit" class="checkout-button">Confirmer l'achat</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2024 Ultra Clickers Simulator | Tous droits réservés</p>
+</footer>
+
+<script>
+    // Récupérer les articles du panier depuis le localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Fonction pour afficher les articles du panier
+    function displayCartItems() {
+        const cartItemsList = document.getElementById('cart-items-list');
+        cartItemsList.innerHTML = ''; // Réinitialiser la liste avant de la remplir
+        let total = 0;
+
+        // Ajouter les articles à la page
+        cart.forEach(item => {
+            const div = document.createElement('div');
+            div.classList.add('cart-item');
+            div.innerHTML = `
+                <p>${item.name} x${item.quantity}</p>
+                <p>Prix : ${item.price * item.quantity} Robux</p>
+            `;
+            cartItemsList.appendChild(div);
+            total += item.price * item.quantity;
+        });
+
+        // Afficher le total
+        document.getElementById('total-price').textContent = total;
+    }
+
+    // Fonction pour gérer la sélection du mode de paiement
+    document.getElementById('user-payment').addEventListener('change', function(event) {
+        const paymentMethod = event.target.value;
+        const paymentDetailsDiv = document.getElementById('payment-details');
+        
+        paymentDetailsDiv.innerHTML = ''; // Réinitialiser les détails
+
+        if (paymentMethod === 'credit-card') {
+            paymentDetailsDiv.innerHTML = `
+                <label for="card-number">Numéro de carte :</label>
+                <input type="text" id="card-number" placeholder="Entrez votre numéro de carte" required><br>
+                <label for="card-expiry">Date d'expiration :</label>
+                <input type="month" id="card-expiry" required><br>
+                <label for="card-cvc">CVC :</label>
+                <input type="text" id="card-cvc" placeholder="Entrez le code CVC" required><br>
+            `;
+        } else if (paymentMethod === 'paypal') {
+            paymentDetailsDiv.innerHTML = `
+                <label for="paypal-email">Email PayPal :</label>
+                <input type="email" id="paypal-email" placeholder="Entrez votre email PayPal" required><br>
+            `;
+        } else if (paymentMethod === 'bitcoin') {
+            paymentDetailsDiv.innerHTML = `
+                <label for="bitcoin-address">Adresse Bitcoin :</label>
+                <input type="text" id="bitcoin-address" placeholder="Entrez votre adresse Bitcoin" required><br>
+            `;
+        } else if (paymentMethod === 'bancontact') {
+            paymentDetailsDiv.innerHTML = `
+                <label for="bancontact-id">ID Bancontact :</label>
+                <input type="text" id="bancontact-id" placeholder="Entrez votre ID Bancontact" required><br>
+            `;
+        }
+    });
+
+    // Fonction de validation de paiement
+    document.getElementById('payment-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Collecte des informations du formulaire
+        const userName = document.getElementById('user-name').value;
+        const userEmail = document.getElementById('user-email').value;
+        const userRobloxUsername = document.getElementById('user-roblox-username').value;
+        const userPayment = document.getElementById('user-payment').value;
+        const paymentDetails = document.getElementById('payment-details').querySelectorAll('input');
+        
+        // Vérification de l'existence d'articles dans le panier
+        if (cart.length === 0) {
+            alert('Votre panier est vide. Veuillez ajouter des articles avant de passer à l\'achat.');
+            return;
+        }
+
+        // Vérification des détails de paiement (selon le mode choisi)
+        let paymentValid = true;
+        paymentDetails.forEach(input => {
+            if (!input.value) {
+                paymentValid = false;
+            }
+        });
+
+        // Vérification du pseudo Roblox
+        if (!userRobloxUsername) {
+            alert('Veuillez entrer votre pseudo Roblox.');
+            return;
+        }
+
+        if (!paymentValid) {
+            alert('Veuillez remplir toutes les informations de paiement.');
+            return;
+        }
+
+        // Envoyer l'email avec les informations de la commande
+        emailjs.init("lNRFarGZTtVdMSl9CTidQ"); // Remplacez par votre USER_ID d'EmailJS
+
+        const templateParams = {
+            user_name: userName,
+            user_email: userEmail,
+            user_roblox_username: userRobloxUsername,
+            user_payment: userPayment,
+            total: document.getElementById('total-price').textContent,
+            items: cart
+        };
+
+        emailjs.send("service_c3iua8c", "template_fhczk26", templateParams)
+            .then(function(response) {
+                alert("Commande passée avec succès ! Un email de confirmation a été envoyé.");
+                localStorage.removeItem('cart');
+                window.location.href = 'index.html'; // Rediriger vers la page d'accueil
+            }, function(error) {
+                alert("Échec de l'envoi de l'email. Veuillez réessayer.");
+            });
+    });
+
+    // Afficher les articles du panier
+    displayCartItems();
+</script>
+
+</body>
+</html>
