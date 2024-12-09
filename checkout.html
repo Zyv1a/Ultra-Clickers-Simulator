@@ -7,142 +7,7 @@
     <title>Passer à l'achat - Ultra Clickers Simulator</title>
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <style>
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            padding: 0;
-            background-color: #1a1a1a;
-            color: #33ff33;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        header {
-            background-color: #000000;
-            color: #33ff33;
-            padding: 40px 20px;
-            border-bottom: 3px solid #333;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 36px;
-            font-weight: bold;
-            text-align: center;
-        }
-        .back-home {
-            font-size: 20px;
-            color: #33ff33;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        .back-home:hover {
-            color: #ff6600;
-        }
-        .cart-icon {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            transition: transform 0.3s ease-in-out;
-        }
-        .cart-icon:hover {
-            transform: scale(1.1);
-        }
-        .content {
-            padding: 40px 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .cart-items {
-            background-color: #2a2a2a;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            margin-bottom: 30px;
-            width: 100%;
-            max-width: 800px;
-        }
-        .cart-items h2 {
-            color: #ff6600;
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #444;
-        }
-        .cart-item:last-child {
-            border-bottom: none;
-        }
-        .cart-item p {
-            margin: 0;
-        }
-        .total {
-            text-align: right;
-            font-size: 20px;
-            margin-top: 20px;
-        }
-        .checkout-button {
-            background-color: #ff6600;
-            color: #fff;
-            border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            margin-top: 40px;
-        }
-        .checkout-button:hover {
-            background-color: #e65c00;
-        }
-        footer {
-            background-color: #000000;
-            color: #33ff33;
-            text-align: center;
-            padding: 15px 0;
-            font-size: 14px;
-            margin-top: auto;
-        }
-        .payment-method {
-            background-color: #2a2a2a;
-            padding: 30px;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 800px;
-            margin-top: 30px;
-        }
-        .payment-method label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        .payment-method input,
-        .payment-method select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            background-color: #333;
-            border: 1px solid #444;
-            color: #fff;
-            border-radius: 8px;
-        }
-        .payment-method input:focus,
-        .payment-method select:focus {
-            border-color: #ff6600;
-        }
-        #payment-details {
-            margin-top: 20px;
-        }
+        /* Vos styles ici */
     </style>
 </head>
 <body>
@@ -166,13 +31,13 @@
         <h3>Informations de paiement</h3>
         <label for="user-name">Nom :</label>
         <input type="text" id="user-name" placeholder="Entrez votre nom" required><br>
-        
+
         <label for="user-email">Email :</label>
         <input type="email" id="user-email" placeholder="Entrez votre email" required><br>
-        
+
         <label for="user-roblox-username">Pseudo Roblox :</label>
         <input type="text" id="user-roblox-username" placeholder="Entrez votre pseudo Roblox" required><br>
-        
+
         <label for="user-payment">Choisissez votre mode de paiement :</label>
         <select id="user-payment" required>
             <option value="credit-card">Carte de crédit</option>
@@ -180,9 +45,9 @@
             <option value="bitcoin">Bitcoin</option>
             <option value="bancontact">Bancontact</option>
         </select><br>
-        
+
         <div id="payment-details"></div>
-        
+
         <button type="submit" class="checkout-button">Confirmer l'achat</button>
     </form>
 </div>
@@ -192,16 +57,13 @@
 </footer>
 
 <script>
-    // Récupérer les articles du panier depuis le localStorage
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    // Fonction pour afficher les articles du panier
     function displayCartItems() {
         const cartItemsList = document.getElementById('cart-items-list');
-        cartItemsList.innerHTML = ''; // Réinitialiser la liste avant de la remplir
+        cartItemsList.innerHTML = '';
         let total = 0;
 
-        // Ajouter les articles à la page
         cart.forEach(item => {
             const div = document.createElement('div');
             div.classList.add('cart-item');
@@ -213,16 +75,14 @@
             total += item.price * item.quantity;
         });
 
-        // Afficher le total
         document.getElementById('total-price').textContent = total;
     }
 
-    // Fonction pour gérer la sélection du mode de paiement
     document.getElementById('user-payment').addEventListener('change', function(event) {
         const paymentMethod = event.target.value;
         const paymentDetailsDiv = document.getElementById('payment-details');
-        
-        paymentDetailsDiv.innerHTML = ''; // Réinitialiser les détails
+
+        paymentDetailsDiv.innerHTML = '';
 
         if (paymentMethod === 'credit-card') {
             paymentDetailsDiv.innerHTML = `
@@ -251,65 +111,69 @@
         }
     });
 
-    // Fonction de validation de paiement
     document.getElementById('payment-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
-        // Collecte des informations du formulaire
         const userName = document.getElementById('user-name').value;
         const userEmail = document.getElementById('user-email').value;
         const userRobloxUsername = document.getElementById('user-roblox-username').value;
         const userPayment = document.getElementById('user-payment').value;
-        const paymentDetails = document.getElementById('payment-details').querySelectorAll('input');
-        
-        // Vérification de l'existence d'articles dans le panier
+
         if (cart.length === 0) {
             alert('Votre panier est vide. Veuillez ajouter des articles avant de passer à l\'achat.');
             return;
         }
 
-        // Vérification des détails de paiement (selon le mode choisi)
-        let paymentValid = true;
-        paymentDetails.forEach(input => {
-            if (!input.value) {
-                paymentValid = false;
-            }
-        });
+        const webhookUrl = 'https://discord.com/api/webhooks/1315743194260181103/-3i3RV6fAyKNiPB_nIuQm7IL4HrdUKP_fYSafOc6efumWRwSF2J0iF8NtPuheIL8xiKR'; // Remplacez par l'URL de votre webhook Discord
 
-        // Vérification du pseudo Roblox
-        if (!userRobloxUsername) {
-            alert('Veuillez entrer votre pseudo Roblox.');
-            return;
-        }
-
-        if (!paymentValid) {
-            alert('Veuillez remplir toutes les informations de paiement.');
-            return;
-        }
-
-        // Envoyer l'email avec les informations de la commande
-        emailjs.init("lNRFarGZTtVdMSl9CTidQ"); // Remplacez par votre USER_ID d'EmailJS
-
-        const templateParams = {
-            user_name: userName,
-            user_email: userEmail,
-            user_roblox_username: userRobloxUsername,
-            user_payment: userPayment,
-            total: document.getElementById('total-price').textContent,
-            items: cart
+        const embed = {
+            username: "Ultra Clickers Simulator",
+            avatar_url: "https://example.com/logo.png", // Remplacez avec une URL valide
+            embeds: [
+                {
+                    title: "Nouvelle Commande 💳",
+                    description: "Une commande vient d'être passée sur la boutique !",
+                    color: 15844367,
+                    fields: [
+                        { name: "Nom", value: userName, inline: true },
+                        { name: "Email", value: userEmail, inline: true },
+                        { name: "Pseudo Roblox", value: userRobloxUsername, inline: true },
+                        { name: "Mode de paiement", value: userPayment, inline: true },
+                        { name: "Total", value: `${document.getElementById('total-price').textContent} Robux`, inline: true },
+                        { 
+                            name: "Articles commandés", 
+                            value: cart.map(item => `- ${item.name} x${item.quantity} (${item.price * item.quantity} Robux)`).join("\n")
+                        }
+                    ],
+                    footer: {
+                        text: "Champion Production © 2024",
+                        icon_url: "https://example.com/footer-icon.png" // Remplacez avec une URL valide
+                    },
+                    timestamp: new Date()
+                }
+            ]
         };
 
-        emailjs.send("service_c3iua8c", "template_fhczk26", templateParams)
-            .then(function(response) {
-                alert("Commande passée avec succès ! Un email de confirmation a été envoyé.");
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(embed)
+        }).then(response => {
+            if (response.ok) {
+                alert('Commande passée avec succès et envoyée au salon Discord !');
                 localStorage.removeItem('cart');
-                window.location.href = 'index.html'; // Rediriger vers la page d'accueil
-            }, function(error) {
-                alert("Échec de l'envoi de l'email. Veuillez réessayer.");
-            });
+                window.location.href = 'index.html';
+            } else {
+                alert('Une erreur s\'est produite lors de l\'envoi au salon Discord.');
+            }
+        }).catch(error => {
+            console.error('Erreur:', error);
+            alert('Une erreur s\'est produite lors de l\'envoi au salon Discord.');
+        });
     });
 
-    // Afficher les articles du panier
     displayCartItems();
 </script>
 
