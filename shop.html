@@ -54,15 +54,27 @@
             padding: 40px 20px;
             flex: 1;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .category {
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 280px; /* Limite la taille des colonnes */
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .category h3 {
+            color: #ff6600;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
         }
         .shop-item {
             background-color: #2a2a2a;
             padding: 20px;
             margin: 20px 0;
             width: 100%;
-            max-width: 600px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
@@ -96,7 +108,7 @@
 <body>
 
 <header>
-    <a href="index.html" class="back-home">&#8962; Accueil</a>
+    <a href="Clicks.html" class="back-home">&#8962; Accueil</a>
     <h1>Boutique - Ultra Clickers Simulator</h1>
     <a href="cart.html">
         <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Shopping_cart_font_awesome.svg" alt="Panier" class="cart-icon">
@@ -104,22 +116,44 @@
 </header>
 
 <div class="content">
-    <h2>Articles disponibles :</h2>
-    
-    <!-- Article 1 -->
-    <div class="shop-item">
-        <p>Boost de clics x2</p>
-        <p>Prix : 50 Robux</p>
-        <input type="number" class="quantity-input" id="boost-quantity" value="1" min="1" />
-        <button onclick="addItemToCart('Boost de clics x2', 50, document.getElementById('boost-quantity').value)">Ajouter au panier</button>
+    <!-- Catégorie Boosts -->
+    <div class="category">
+        <h3>Boosts</h3>
+        <div class="shop-item">
+            <p> Titre</p>
+            <p>Price :</p>
+            <input type="number" class="quantity-input" id="boost-quantity" value="1" min="1" />
+            <button onclick="addItemToCart('Boost de clics x2', 50, document.getElementById('boost-quantity').value)">Ajouter au panier</button>
+        </div>
     </div>
 
-    <!-- Article 2 -->
-    <div class="shop-item">
-        <p>Pet légendaire</p>
-        <p>Prix : 200 Robux</p>
-        <input type="number" class="quantity-input" id="pet-quantity" value="1" min="1" />
-        <button onclick="addItemToCart('Pet légendaire', 200, document.getElementById('pet-quantity').value)">Ajouter au panier</button>
+    <!-- Catégorie Pets -->
+    <div class="category">
+        <h3>Pets</h3>
+        <div class="shop-item">
+            <p>TITANIC GALACTIC</p>
+            <p>Prix : 0 euro</p>
+            <input type="number" class="quantity-input" id="pet-quantity" value="1" min="1" />
+            <button onclick="addItemToCart('TITANIC GALACTIC', 0, document.getElementById('pet-quantity').value)">Ajouter au panier</button>
+        </div>
+    </div>
+
+    <!-- Catégorie Accessoires -->
+    <div class="category">
+        <h3>Accessoires</h3>
+        <!-- Ajouter des articles pour Accessoires -->
+    </div>
+
+    <!-- Catégorie Monnaies -->
+    <div class="category">
+        <h3>Monnaies</h3>
+        <!-- Ajouter des articles pour Monnaies -->
+    </div>
+
+    <!-- Catégorie Vêtements -->
+    <div class="category">
+        <h3>Vêtements</h3>
+        <!-- Ajouter des articles pour Vêtements -->
     </div>
 </div>
 
@@ -132,7 +166,7 @@
     function addItemToCart(name, price, quantity) {
         let cart = JSON.parse(localStorage.getItem('cart')) || []; // Récupérer le panier depuis localStorage ou créer un tableau vide
         quantity = parseInt(quantity, 10); // Convertir la quantité en entier
-        
+
         // Vérifier si l'article existe déjà dans le panier
         const existingItem = cart.find(item => item.name === name);
         if (existingItem) {
