@@ -7,7 +7,166 @@
     <title>Passer à l'achat - Ultra Clickers Simulator</title>
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <style>
-        /* Vos styles ici */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #000000;
+            color: #33ff33;
+            padding: 40px 20px;
+            border-bottom: 3px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .back-home {
+            font-size: 20px;
+            color: #33ff33;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .back-home:hover {
+            color: #ff6600;
+        }
+        .cart-icon {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+        .content {
+            padding: 40px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .cart-items {
+            background-color: #2a2a2a;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .cart-items h2 {
+            color: #ff6600;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #444;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .cart-item p {
+            margin: 0;
+        }
+        .total {
+            text-align: right;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .checkout-button {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            margin-top: 40px;
+        }
+        .checkout-button:hover {
+            background-color: #e65c00;
+        }
+        footer {
+            background-color: #000000;
+            color: #33ff33;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+            margin-top: auto;
+        }
+        .remove-button, .reduce-button {
+            background-color: #ff3333;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+        .reduce-button {
+            background-color: #ff6600;
+        }
+        .remove-button:hover, .reduce-button:hover {
+            background-color: #e65c00;
+        }
+        .payment-method {
+            background-color: #2a2a2a;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+        .payment-method h3 {
+            color: #ff6600;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .payment-method input, .payment-method select {
+            background-color: #333;
+            border: 1px solid #444;
+            color: #33ff33;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .payment-method button {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .payment-method button:hover {
+            background-color: #e65c00;
+        }
     </style>
 </head>
 <body>
@@ -124,11 +283,11 @@
             return;
         }
 
-        const webhookUrl = 'https://discord.com/api/webhooks/1315743194260181103/-3i3RV6fAyKNiPB_nIuQm7IL4HrdUKP_fYSafOc6efumWRwSF2J0iF8NtPuheIL8xiKR'; // Remplacez par l'URL de votre webhook Discord
+        const webhookUrl = 'https://discord.com/api/webhooks/1315743194260181103/-3i3RV6fAyKNiPB_nIuQm7IL4HrdUKP_fYSafOc6efumWRwSF2J0iF8NtPuheIL8xiKR';
 
         const embed = {
             username: "Ultra Clickers Simulator",
-            avatar_url: "https://example.com/logo.png", // Remplacez avec une URL valide
+            avatar_url: "https://example.com/logo.png",
             embeds: [
                 {
                     title: "Nouvelle Commande 💳",
@@ -147,7 +306,7 @@
                     ],
                     footer: {
                         text: "Champion Production © 2024",
-                        icon_url: "https://example.com/footer-icon.png" // Remplacez avec une URL valide
+                        icon_url: "https://example.com/footer-icon.png"
                     },
                     timestamp: new Date()
                 }
