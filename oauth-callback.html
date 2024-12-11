@@ -1,0 +1,63 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth Redirect Handler</title>
+</head>
+<body>
+    <h1>Processing OAuth Response...</h1>
+    <script>
+        // Parse query parameters from URL
+        const queryParams = new URLSearchParams(window.location.search);
+
+        // Extract the authorization code or token from the query
+        const authCode = queryParams.get('code');
+        const error = queryParams.get('error');
+
+        if (error) {
+            console.error("OAuth Error:", error);
+            document.body.innerHTML = `<h1>Error during authentication</h1><p>${error}</p>`;
+        } else if (authCode) {
+            console.log("Authorization Code:", authCode);
+
+            // Exchange the authorization code for an access token (server-side operation recommended)
+            fetch('https://example.com/oauth/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    code: authCode,
+                    client_id: '3592633625324765247',
+                    client_secret: 'RBX-0hApNtg8dUm6EFwqcfXbOfxujm6E6wJ9kzEoWWytnMjeiqo5Y5TR9uOrgc0EwzfC',
+                    redirect_uri: 'https://zyv1a.github.io/Ultra-Clickers-Simulator/oauth-callback',
+                    grant_type: 'authorization_code'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.access_token) {
+                    console.log("Access Token:", data.access_token);
+
+                    // Stocker le token dans localStorage
+                    localStorage.setItem('accessToken', data.access_token);
+
+                    // Redirection vers une page protégée
+                    window.location.href = "https://zyv1a.github.io/Ultra-Clickers-Simulator/index.html";
+                } else {
+                    console.error("Token Exchange Error:", data);
+                    document.body.innerHTML = `<h1>Error during token exchange</h1><p>${JSON.stringify(data)}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error("Fetch Error:", error);
+                document.body.innerHTML = `<h1>Error during token exchange</h1><p>${error.message}</p>`;
+            });
+        } else {
+            console.error("No authorization code found in the query parameters.");
+            document.body.innerHTML = `<h1>Missing Authorization Code</h1><p>Ensure that the redirect URL is configured correctly and try again.</p>`;
+        }
+    </script>
+</body>
+</html>
