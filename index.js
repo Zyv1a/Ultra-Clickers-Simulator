@@ -67,3 +67,4 @@ client.login(process.env.DISCORD_TOKEN);  // Se connecter avec le token du bot
 server.listen(PORT, () => {
     console.log(`Serveur actif sur le port ${PORT}`);
 });
+
