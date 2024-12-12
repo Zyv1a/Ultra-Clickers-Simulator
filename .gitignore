@@ -4,8 +4,5 @@ node_modules/
 # Ignore les fichiers de configuration contenant des informations sensibles
 .env
 
-# Ignore les fichiers spécifiques à discord.js et d'autres fichiers générés
-discord.js
-
-# Ignore les fichiers de sauvegarde ou autres données temporaires
+# Ignore les fichiers spécifiques générés par l'application
 status.json
