@@ -3,25 +3,9 @@ node_modules/
 
 # Ignore les fichiers de configuration contenant des informations sensibles
 .env
-discord.js
 
-# Ignorer des fichiers spécifiques supplémentaires
+# Autres fichiers spécifiques ou sensibles
+discord.js
 status.json
 server.js
 bot.js
-
-# Ignorer les fichiers générés par IDEs
-.vscode/
-.idea/
-
-# Ignorer les logs
-*.log
-*.log.*
-
-# Ignorer les fichiers de système d'exploitation (macOS et Windows)
-.DS_Store
-Thumbs.db
-
-# Ignorer les fichiers de dépendances spécifiques à certains services de build
-yarn-error.log
-npm-debug.log
