@@ -3,7 +3,7 @@ const http = require('http');
 const WebSocket = require('ws');  // Importer la bibliothèque WebSocket
 
 // Définir le port
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;  // Changez de 3000 à 3001
 
 // Créer le serveur HTTP
 const server = http.createServer((req, res) => {
