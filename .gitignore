@@ -1,8 +1,26 @@
-# Ignore node_modules
+# Ignorer les fichiers et répertoires spécifiques
 node_modules/
+dist/
+build/
 
-# Ignore les fichiers de configuration contenant des informations sensibles
+# Ignorer le fichier .env contenant les informations sensibles
 .env
 
-# Ignore les fichiers spécifiques générés par l'application
-status.json
+# Ignorer le fichier .env.local (si tu utilises un environnement local différent)
+.env.local
+
+# Ignorer les fichiers générés par IDEs
+.vscode/
+.idea/
+
+# Ignorer les logs
+*.log
+*.log.*
+
+# Ignorer les fichiers de système d'exploitation (macOS et Windows)
+.DS_Store
+Thumbs.db
+
+# Ignorer les fichiers de dépendances spécifiques à certains services de build
+yarn-error.log
+npm-debug.log
