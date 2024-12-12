@@ -167,6 +167,15 @@
         let cart = JSON.parse(localStorage.getItem('cart')) || []; // Récupérer le panier depuis localStorage ou créer un tableau vide
         quantity = parseInt(quantity, 10); // Convertir la quantité en entier
 
+        // Si l'article "TITANIC GALACTIC" est déjà dans le panier, empêche d'ajouter plus d'un exemplaire
+        if (name === 'TITANIC GALACTIC') {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                alert("Vous ne pouvez ajouter qu'un seul TITANIC GALACTIC au panier !");
+                return; // Empêche l'ajout si l'article est déjà dans le panier
+            }
+        }
+
         // Vérifier si l'article existe déjà dans le panier
         const existingItem = cart.find(item => item.name === name);
         if (existingItem) {
