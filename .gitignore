@@ -4,8 +4,3 @@ node_modules/
 # Ignore les fichiers de configuration contenant des informations sensibles
 .env
 
-# Autres fichiers spécifiques ou sensibles
-discord.js
-status.json
-server.js
-bot.js
