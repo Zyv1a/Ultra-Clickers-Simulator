@@ -1,13 +1,14 @@
-# Ignorer les fichiers et répertoires spécifiques
+# Ignore node_modules
 node_modules/
-dist/
-build/
 
-# Ignorer le fichier .env contenant les informations sensibles
+# Ignore les fichiers de configuration contenant des informations sensibles
 .env
+discord.js
 
-# Ignorer le fichier .env.local (si tu utilises un environnement local différent)
-.env.local
+# Ignorer des fichiers spécifiques supplémentaires
+status.json
+server.js
+bot.js
 
 # Ignorer les fichiers générés par IDEs
 .vscode/
