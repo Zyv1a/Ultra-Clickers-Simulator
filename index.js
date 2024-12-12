@@ -2,9 +2,6 @@
 const http = require('http');
 const WebSocket = require('ws');  // Importer la bibliothèque WebSocket
 
-// Définir le port
-const PORT = process.env.PORT || 3001;  // Changez de 3000 à 3001
-
 // Créer le serveur HTTP
 const server = http.createServer((req, res) => {
     res.end('Le serveur backend est opérationnel !');
@@ -56,7 +53,7 @@ wss.on('connection', (ws) => {
     });
 });
 
-// Lancer le serveur sur le port défini
-server.listen(PORT, () => {
-    console.log(`Serveur actif sur le port ${PORT}`);
+// Lancer le serveur sur le port défini par Vercel (ou le port par défaut 3000)
+server.listen(process.env.PORT || 3000, () => {
+    console.log(`Serveur actif sur le port ${process.env.PORT || 3000}`);
 });
