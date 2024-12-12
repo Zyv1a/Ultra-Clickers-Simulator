@@ -7,7 +7,7 @@ const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
 });
 
-const PORT = process.env.PORT || 3000;  // Utiliser le port défini par Vercel, sinon 3001
+const PORT = process.env.PORT || 3002;  // Utiliser le port défini par Vercel, sinon 3001
 
 const server = http.createServer((req, res) => {
     res.end('Le serveur backend est opérationnel !');
