@@ -4,7 +4,7 @@ const WebSocket = require('ws');  // Importation de WebSocket
 require('dotenv').config();  // Charger les variables d'environnement
 
 // Connexion WebSocket à localhost:3002
-const ws = new WebSocket('ws://localhost:3003');
+const ws = new WebSocket('ws://localhost:3002');
 
 // Commandes de contrôle
 let leaderboardsActive = false;
@@ -46,8 +46,8 @@ function deactivateLeaderboards() {
 }
 
 // Démarrage du serveur WebSocket
-server.listen(process.env.PORT || 3003, () => {
-    console.log('Serveur actif sur le port 3003');
+server.listen(process.env.PORT || 3002, () => {
+    console.log('Serveur actif sur le port 3002');
 });
 
 // Exporter pour d'autres fichiers si nécessaire
