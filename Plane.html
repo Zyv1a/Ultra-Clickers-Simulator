@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Site officiel du jeu [BETA] Merge Plane sur Roblox. Fusionnez des avions et explorez le ciel pour gagner !">
+    <title>[BETA] Merge Plane - Roblox</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #000000;
+            color: #33ff33;
+            padding: 40px 20px;
+            border-bottom: 3px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #33ff33;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .back-home:hover {
+            color: #ff6600;
+        }
+        .login-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .login-icon:hover {
+            transform: scale(1.1);
+        }
+        .cta-button {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 18px 36px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-family: 'Courier New', Courier, monospace;
+            margin-top: 20px;
+        }
+        .cta-button:hover {
+            background-color: #e65c00;
+        }
+        .content {
+            padding: 40px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .game-description {
+            background-color: #2a2a2a;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .categories-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 30px;
+        }
+        .category {
+            flex: 1;
+            margin: 10px;
+            min-width: 240px;
+        }
+        .category h2 {
+            color: #ff6600;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .category p {
+            margin-bottom: 15px;
+        }
+        footer {
+            background-color: #000000;
+            color: #33ff33;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+            margin-top: auto;
+        }
+        .important-section {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 40px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+        .important-section h2 {
+            color: #ff6600;
+            font-size: 24px;
+        }
+        .important-section p {
+            font-size: 16px;
+        }
+        .important-section a {
+            color: #33ff33;
+            text-decoration: underline;
+        }
+        .important-section a:hover {
+            color: #33ff33;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-home">&#8962; Accueil</a>
+        <h1>[BETA] Merge Plane</h1>
+        <a href="https://www.roblox.com/fr/games/1234567890/Merge-Plane" class="cta-button" target="_blank">Jouer Maintenant</a>
+        <a href="user-info.html">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Roblox_Logo_2017.png" alt="Roblox Logo" class="login-icon">
+        </a>
+    </header>
+
+    <div class="content">
+        <section class="game-description">
+            <h2>Qu'est-ce que [BETA] Merge Plane ?</h2>
+            <p>[BETA] Merge Plane est un jeu où vous fusionnez des avions pour créer des modèles plus puissants et les envoyer dans le ciel pour gagner des récompenses. Débloquez de nouveaux avions, améliorez-les et devenez le maître de l'aviation !</p>
+        </section>
+
+        <div class="categories-section">
+            <div class="category">
+                <h2>Valeurs des avions :</h2>
+                <p>Consultez les valeurs des différents avions et leurs prix pour maximiser vos stratégies de fusion.</p>
+                <a href="values-planes.html" class="cta-button">Voir les valeurs</a>
+            </div>
+
+            <div class="category">
+                <h2>Classements :</h2>
+                <p>Découvrez les meilleurs joueurs de Merge Plane et tentez de battre les records.</p>
+                <a href="classements.html" class="cta-button">Voir les classements</a>
+            </div>
+        </div>
+
+        <div class="categories-section">
+            <div class="category">
+                <h2>Shop :</h2>
+                <p>Visitez le shop pour acheter des boosts, des avions exclusifs et bien plus pour accélérer votre progression.</p>
+                <a href="shop.html" class="cta-button">Accéder au Shop</a>
+            </div>
+        </div>
+
+        <section class="important-section">
+            <h2>Informations importantes</h2>
+            <p>Veuillez consulter nos <a href="privacy-policy.html">Politique de Confidentialité</a> et nos <a href="terms-of-service.html">Conditions d'Utilisation</a> pour plus d'informations.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 [BETA] Merge Plane | Tous droits réservés</p>
+    </footer>
+
+    <script>
+        // Simuler la connexion : changer l'icône en lien
+        var isLoggedIn = true;  // Remplacer cette variable par l'authentification réelle
+
+        if (isLoggedIn) {
+            document.querySelector('.login-icon').src = "https://upload.wikimedia.org/wikipedia/commons/4/4f/Roblox_Icon_2021.png";  // Nouveau logo pour "connecté"
+        }
+    </script>
+
+</body>
+</html>
