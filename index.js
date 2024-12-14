@@ -46,8 +46,8 @@ function deactivateLeaderboards() {
 }
 
 // Démarrage du serveur WebSocket
-server.listen(process.env.PORT || 3002, () => {
-    console.log('Serveur actif sur le port 3002');
+server.listen(process.env.PORT || 3003, () => {
+    console.log('Serveur actif sur le port 3003');
 });
 
 // Exporter pour d'autres fichiers si nécessaire
