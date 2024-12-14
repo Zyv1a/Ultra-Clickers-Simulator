@@ -114,5 +114,39 @@
         <p>&copy; 2024 Ultra Clickers Simulator | Tous droits réservés</p>
     </footer>
 
+    <!-- Ajoutez le script WebSocket ici -->
+    <script>
+        const socket = new WebSocket('ws://localhost:3002');
+        
+        socket.onopen = function(event) {
+            console.log("WebSocket est connecté.");
+        };
+        
+        socket.onerror = function(event) {
+            console.error("WebSocket erreur:", event);
+        };
+        
+        socket.onmessage = function(event) {
+            console.log("Message du serveur:", event.data);
+            
+            // Traitez et affichez les données des leaderboards
+            const leaderboardData = JSON.parse(event.data);
+            const leaderboardContainer = document.createElement("div");
+            leaderboardContainer.innerHTML = `
+                <h3>Classements</h3>
+                <ul>
+                    ${leaderboardData.clicks.map(player => `
+                        <li>${player.name}: ${player.score} clics</li>
+                    `).join('')}
+                </ul>
+            `;
+            document.body.appendChild(leaderboardContainer);
+        };
+        
+        socket.onclose = function(event) {
+            console.log("Connexion WebSocket fermée.");
+        };
+    </script>
+
 </body>
 </html>
