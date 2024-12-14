@@ -1,128 +1,67 @@
-const { Client, GatewayIntentBits } = require('discord.js');
-const WebSocket = require('ws');
-require('dotenv').config();
+const http = require('http');
+const WebSocket = require('ws');  // Importation de WebSocket pour gérer le serveur WebSocket
+require('dotenv').config();  // Pour charger les variables d'environnement
 
-const client = new Client({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
+const PORT = process.env.PORT || 3002;  // Le port du serveur WebSocket
+
+// Création d'un serveur HTTP pour accueillir WebSocket
+const server = http.createServer((req, res) => {
+    res.end('Serveur backend actif !');
 });
 
-const token = process.env.DISCORD_TOKEN;
-const ws = new WebSocket('ws://localhost:3002');  // Assure-toi que le serveur WebSocket est actif
+// Création du serveur WebSocket
+const wss = new WebSocket.Server({ server });
 
-let botActive = true;
 let leaderboardsActive = false;
-const logChannelId = '1316848219690369024';  // Remplacez par l'ID du salon où les logs seront envoyés
 
-ws.on('open', () => {
-    console.log('Connexion WebSocket établie avec succès.');
-});
+// Gestion des connexions WebSocket
+wss.on('connection', (ws) => {
+    console.log('Nouvelle connexion WebSocket établie');
 
-ws.on('error', (error) => {
-    console.error('Erreur WebSocket :', error);
-});
+    ws.on('message', (message) => {
+        console.log('Message reçu du client:', message);
+        
+        const data = JSON.parse(message);
 
-client.on('messageCreate', (message) => {
-    if (message.author.bot) return;
-
-    const logChannel = client.channels.cache.get(logChannelId); // Récupère le salon de log
-
-    // Commande pour activer le bot
-    if (message.content.toLowerCase() === '!activate') {
-        if (!botActive) {
-            botActive = true;
-            message.channel.send('Le bot est maintenant activé!');
-            console.log('Bot activé!');
-            if (logChannel) {
-                logChannel.send('Commande !activate utilisée. Le bot est maintenant activé!');
-            }
-        } else {
-            message.channel.send('Le bot est déjà activé.');
-            console.log('Le bot était déjà actif.');
-            if (logChannel) {
-                logChannel.send('Commande !activate utilisée. Le bot était déjà actif.');
-            }
-        }
-    }
-
-    // Commande pour désactiver le bot
-    if (message.content.toLowerCase() === '!deactivate') {
-        if (botActive) {
-            botActive = false;
-            message.channel.send('Le bot est maintenant désactivé.');
-            console.log('Bot désactivé!');
-            if (logChannel) {
-                logChannel.send('Commande !deactivate utilisée. Le bot est maintenant désactivé!');
-            }
-        } else {
-            message.channel.send('Le bot est déjà désactivé.');
-            console.log('Le bot était déjà désactivé.');
-            if (logChannel) {
-                logChannel.send('Commande !deactivate utilisée. Le bot était déjà désactivé.');
-            }
-        }
-    }
-
-    // Commande pour démarrer les leaderboards
-    if (message.content === '!start-leaderboards') {
-        if (!leaderboardsActive) {
+        // Activer ou désactiver les leaderboards en fonction des actions
+        if (data.action === 'activate_leaderboards') {
             leaderboardsActive = true;
-            message.reply('Les leaderboards sont maintenant actifs !');
-            console.log('Commande !start-leaderboards reçue, démarrage du WebSocket...');
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.send(JSON.stringify({ action: 'activate_leaderboards' }));
-                console.log('Message envoyé au WebSocket pour activer les leaderboards.');
-                if (logChannel) {
-                    logChannel.send('Commande !start-leaderboards utilisée. Les leaderboards sont maintenant actifs.');
-                }
-            } else {
-                console.error('WebSocket non ouvert pour envoyer la commande d\'activation des leaderboards.');
-            }
-        } else {
-            message.reply('Les leaderboards sont déjà actifs.');
-            console.log('Les leaderboards sont déjà actifs.');
-            if (logChannel) {
-                logChannel.send('Commande !start-leaderboards utilisée. Les leaderboards sont déjà actifs.');
-            }
-        }
-    }
-
-    // Commande pour arrêter les leaderboards
-    if (message.content === '!stop-leaderboards') {
-        if (leaderboardsActive) {
+            console.log('Leaderboards activés');
+        } else if (data.action === 'deactivate_leaderboards') {
             leaderboardsActive = false;
-            message.reply('Les leaderboards sont maintenant inactifs.');
-            console.log('Commande !stop-leaderboards reçue, désactivation des leaderboards...');
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.send(JSON.stringify({ action: 'deactivate_leaderboards' }));
-                console.log('Message envoyé au WebSocket pour désactiver les leaderboards.');
-                if (logChannel) {
-                    logChannel.send('Commande !stop-leaderboards utilisée. Les leaderboards sont maintenant inactifs.');
-                }
-            } else {
-                console.error('WebSocket non ouvert pour envoyer la commande de désactivation des leaderboards.');
-            }
-        } else {
-            message.reply('Les leaderboards sont déjà inactifs.');
-            console.log('Les leaderboards sont déjà inactifs.');
-            if (logChannel) {
-                logChannel.send('Commande !stop-leaderboards utilisée. Les leaderboards sont déjà inactifs.');
-            }
+            console.log('Leaderboards désactivés');
         }
-    }
+    });
 
-    // Exemple si le bot est actif
-    if (botActive && message.content.toLowerCase() === '!hello') {
-        message.channel.send('Bonjour ! Le bot est activé.');
-        console.log('Réponse à la commande !hello.');
-        if (logChannel) {
-            logChannel.send('Commande !hello utilisée. Le bot a répondu.');
+    // Envoi des données des leaderboards toutes les 5 secondes si activés
+    setInterval(() => {
+        if (leaderboardsActive) {
+            const leaderboardData = {
+                clicks: [
+                    { playerName: 'Player1', score: 1500 },
+                    { playerName: 'Player2', score: 1200 },
+                    { playerName: 'Player3', score: 1000 }
+                ],
+                rebirths: [
+                    { playerName: 'Player1', score: 10 },
+                    { playerName: 'Player2', score: 8 },
+                    { playerName: 'Player3', score: 6 }
+                ],
+                eggs: [
+                    { playerName: 'Player1', score: 50 },
+                    { playerName: 'Player2', score: 40 },
+                    { playerName: 'Player3', score: 30 }
+                ]
+            };
+
+            ws.send(JSON.stringify(leaderboardData));  // Envoi des données à chaque client toutes les 5 secondes
         }
-    }
+    }, 5000);
 });
 
-async function startBot() {
-    await client.login(token);
-    console.log('Bot connecté avec succès.');
-}
+// Démarrage du serveur WebSocket
+server.listen(PORT, () => {
+    console.log(`Serveur WebSocket actif sur le port ${PORT}`);
+});
 
-module.exports = { startBot };
+module.exports = { server };
