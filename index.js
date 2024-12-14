@@ -4,7 +4,7 @@ const WebSocket = require('ws');  // Importation de WebSocket
 require('dotenv').config();  // Charger les variables d'environnement
 
 // Connexion WebSocket à localhost:3002
-const ws = new WebSocket('ws://localhost:3002');
+const ws = new WebSocket('ws://localhost:3003');
 
 // Commandes de contrôle
 let leaderboardsActive = false;
