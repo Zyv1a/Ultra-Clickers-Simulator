@@ -114,35 +114,48 @@
         <p>&copy; 2024 Ultra Clickers Simulator | Tous droits réservés</p>
     </footer>
 
-    <!-- Ajoutez le script WebSocket ici -->
+    <!-- Script WebSocket -->
     <script>
-        const socket = new WebSocket('ws://localhost:3002');
-        
+        const socket = new WebSocket('ws://localhost:3003');  // Assurez-vous que le port est correct
+
         socket.onopen = function(event) {
             console.log("WebSocket est connecté.");
         };
-        
+
         socket.onerror = function(event) {
             console.error("WebSocket erreur:", event);
         };
-        
+
         socket.onmessage = function(event) {
             console.log("Message du serveur:", event.data);
-            
+
             // Traitez et affichez les données des leaderboards
             const leaderboardData = JSON.parse(event.data);
             const leaderboardContainer = document.createElement("div");
             leaderboardContainer.innerHTML = `
                 <h3>Classements</h3>
+                <h4>Clics</h4>
                 <ul>
                     ${leaderboardData.clicks.map(player => `
-                        <li>${player.name}: ${player.score} clics</li>
+                        <li>${player.playerName}: ${player.score} clics</li>
+                    `).join('')}
+                </ul>
+                <h4>Rebirths</h4>
+                <ul>
+                    ${leaderboardData.rebirths.map(player => `
+                        <li>${player.playerName}: ${player.score} rebirths</li>
+                    `).join('')}
+                </ul>
+                <h4>Oeufs</h4>
+                <ul>
+                    ${leaderboardData.eggs.map(player => `
+                        <li>${player.playerName}: ${player.score} oeufs</li>
                     `).join('')}
                 </ul>
             `;
             document.body.appendChild(leaderboardContainer);
         };
-        
+
         socket.onclose = function(event) {
             console.log("Connexion WebSocket fermée.");
         };
