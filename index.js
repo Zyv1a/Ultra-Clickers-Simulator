@@ -1,67 +1,54 @@
-const http = require('http');
-const WebSocket = require('ws');  // Importation de WebSocket pour gérer le serveur WebSocket
-require('dotenv').config();  // Pour charger les variables d'environnement
+// index.js
+const { server } = require('./server'); // Importer le serveur WebSocket
+const WebSocket = require('ws');  // Importation de WebSocket
+require('dotenv').config();  // Charger les variables d'environnement
 
-const PORT = process.env.PORT || 3002;  // Le port du serveur WebSocket
+// Connexion WebSocket à localhost:3002
+const ws = new WebSocket('ws://localhost:3002');
 
-// Création d'un serveur HTTP pour accueillir WebSocket
-const server = http.createServer((req, res) => {
-    res.end('Serveur backend actif !');
-});
-
-// Création du serveur WebSocket
-const wss = new WebSocket.Server({ server });
-
+// Commandes de contrôle
 let leaderboardsActive = false;
 
-// Gestion des connexions WebSocket
-wss.on('connection', (ws) => {
-    console.log('Nouvelle connexion WebSocket établie');
-
-    ws.on('message', (message) => {
-        console.log('Message reçu du client:', message);
-        
-        const data = JSON.parse(message);
-
-        // Activer ou désactiver les leaderboards en fonction des actions
-        if (data.action === 'activate_leaderboards') {
-            leaderboardsActive = true;
-            console.log('Leaderboards activés');
-        } else if (data.action === 'deactivate_leaderboards') {
-            leaderboardsActive = false;
-            console.log('Leaderboards désactivés');
-        }
-    });
-
-    // Envoi des données des leaderboards toutes les 5 secondes si activés
-    setInterval(() => {
-        if (leaderboardsActive) {
-            const leaderboardData = {
-                clicks: [
-                    { playerName: 'Player1', score: 1500 },
-                    { playerName: 'Player2', score: 1200 },
-                    { playerName: 'Player3', score: 1000 }
-                ],
-                rebirths: [
-                    { playerName: 'Player1', score: 10 },
-                    { playerName: 'Player2', score: 8 },
-                    { playerName: 'Player3', score: 6 }
-                ],
-                eggs: [
-                    { playerName: 'Player1', score: 50 },
-                    { playerName: 'Player2', score: 40 },
-                    { playerName: 'Player3', score: 30 }
-                ]
-            };
-
-            ws.send(JSON.stringify(leaderboardData));  // Envoi des données à chaque client toutes les 5 secondes
-        }
-    }, 5000);
+// Lors de l'ouverture de la connexion WebSocket
+ws.on('open', () => {
+    console.log('Connexion WebSocket établie avec succès');
 });
+
+// Lors de la réception de messages WebSocket
+ws.on('message', (message) => {
+    console.log('Message du serveur WebSocket:', message);
+    const data = JSON.parse(message);
+
+    // Exemple de données leaderboards envoyées par le serveur
+    console.log('Données des leaderboards:', data);
+});
+
+// Exemple de fonction pour activer les leaderboards via WebSocket
+function activateLeaderboards() {
+    if (!leaderboardsActive) {
+        leaderboardsActive = true;
+        ws.send(JSON.stringify({ action: 'activate_leaderboards' }));
+        console.log('Leaderboards activés');
+    } else {
+        console.log('Les leaderboards sont déjà activés');
+    }
+}
+
+// Exemple de fonction pour désactiver les leaderboards
+function deactivateLeaderboards() {
+    if (leaderboardsActive) {
+        leaderboardsActive = false;
+        ws.send(JSON.stringify({ action: 'deactivate_leaderboards' }));
+        console.log('Leaderboards désactivés');
+    } else {
+        console.log('Les leaderboards sont déjà inactifs');
+    }
+}
 
 // Démarrage du serveur WebSocket
-server.listen(PORT, () => {
-    console.log(`Serveur WebSocket actif sur le port ${PORT}`);
+server.listen(process.env.PORT || 3002, () => {
+    console.log('Serveur actif sur le port 3002');
 });
 
-module.exports = { server };
+// Exporter pour d'autres fichiers si nécessaire
+module.exports = { activateLeaderboards, deactivateLeaderboards };
