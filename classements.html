@@ -180,7 +180,7 @@
     </footer>
 
     <script>
-        const ws = new WebSocket('ws://localhost:3002');  // Connectez-vous à votre serveur WebSocket
+        const ws = new WebSocket('ws://127.0.0.1:3002');  // Changer localhost en 127.0.0.1
 
         ws.onopen = function() {
             console.log("Connexion WebSocket établie.");
