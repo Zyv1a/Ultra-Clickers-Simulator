@@ -113,7 +113,7 @@
     </header>
 
     <div class="content">
-        <!-- Tableau Oeuf de base -->
+        <!-- Oeuf de Base -->
         <div class="values">
             <h2>Oeuf de Base</h2>
             <div class="values-container">
@@ -122,6 +122,7 @@
                         <tr>
                             <th>Nom du Pet</th>
                             <th>Rareté</th>
+                            <th>Pourcentage</th>
                             <th>Multiplicateur Clic</th>
                             <th>Multiplicateur Gemmes</th>
                             <th>Image</th>
@@ -134,7 +135,7 @@
             </div>
         </div>
 
-        <!-- Tableau Oeuf Uncommon -->
+        <!-- Oeuf Uncommon -->
         <div class="values">
             <h2>Oeuf Uncommon</h2>
             <div class="values-container">
@@ -143,6 +144,7 @@
                         <tr>
                             <th>Nom du Pet</th>
                             <th>Rareté</th>
+                            <th>Pourcentage</th>
                             <th>Multiplicateur Clic</th>
                             <th>Multiplicateur Gemmes</th>
                             <th>Image</th>
@@ -155,26 +157,6 @@
             </div>
         </div>
 
-        <!-- Tableau Oeuf Légendaire -->
-        <div class="values">
-            <h2>Oeuf Légendaire</h2>
-            <div class="values-container">
-                <table id="legendary-egg-pets">
-                    <thead>
-                        <tr>
-                            <th>Nom du Pet</th>
-                            <th>Rareté</th>
-                            <th>Multiplicateur Clic</th>
-                            <th>Multiplicateur Gemmes</th>
-                            <th>Image</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Les données des pets de l'œuf Légendaire -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 
     <footer>
@@ -182,26 +164,26 @@
     </footer>
 
     <script>
-        // Définir les pets et leurs informations
-        const petsData = [
-            // Oeuf de Base
-            { name: "Dog", rarity: "Common", clickMultiplier: 1.1, gemMultiplier: 2, image: "12504462656" },
-            { name: "Cat", rarity: "Common", clickMultiplier: 1.15, gemMultiplier: 3, image: "12504462303" },
-            { name: "Pig", rarity: "Common", clickMultiplier: 1.25, gemMultiplier: 4, image: "12504461993" },
-            { name: "Bunny", rarity: "Common", clickMultiplier: 1.4, gemMultiplier: 5, image: "12504462160" },
-
-            // Oeuf Uncommon
-            { name: "Sheep", rarity: "Uncommon", clickMultiplier: 1.5, gemMultiplier: 2, image: "12504461794" },
-            { name: "Goat", rarity: "Uncommon", clickMultiplier: 1.6, gemMultiplier: 3, image: "12504461590" },
-            { name: "Cow", rarity: "Uncommon", clickMultiplier: 1.8, gemMultiplier: 4, image: "12504461434" },
-            { name: "Chicken", rarity: "Uncommon", clickMultiplier: 2.5, gemMultiplier: 5, image: "12504461225" },
-
-            // Oeuf Légendaire
-            { name: "King Doggy", rarity: "Legendary", clickMultiplier: 150, gemMultiplier: 100, image: "12509197097" }
-        ];
+        // Définir les pets et leurs informations pour les œufs "Basic" et "Uncommon"
+        const petsData = {
+            "Basic": [
+                { name: "Dog", rarity: 1, percentage: 49.999, clickMulti: 1.1, gemMulti: 2, imageId: 12504462656 },
+                { name: "Cat", rarity: 2, percentage: 30, clickMulti: 1.15, gemMulti: 3, imageId: 12504462303 },
+                { name: "Pig", rarity: 3, percentage: 15, clickMulti: 1.25, gemMulti: 4, imageId: 12504461993 },
+                { name: "Bunny", rarity: 4, percentage: 5, clickMulti: 1.4, gemMulti: 5, imageId: 12504462160 },
+                { name: "King Doggy", rarity: 7, percentage: 0.001, clickMulti: 150, gemMulti: 100, imageId: 12509197097 }
+            ],
+            "Uncommon": [
+                { name: "Sheep", rarity: 1, percentage: 50, clickMulti: 1.5, gemMulti: 2, imageId: 12504461794 },
+                { name: "Goat", rarity: 2, percentage: 30, clickMulti: 1.6, gemMulti: 3, imageId: 12504461590 },
+                { name: "Cow", rarity: 3, percentage: 15, clickMulti: 1.8, gemMulti: 4, imageId: 12504461434 },
+                { name: "Chicken", rarity: 4, percentage: 4, clickMulti: 2.5, gemMulti: 5, imageId: 12504461225 },
+                { name: "Wind Elemental", rarity: 5, percentage: 1, clickMulti: 4, gemMulti: 10, imageId: 12504461038 }
+            ]
+        };
 
         function updatePetsValues(oeuf, pets) {
-            const tableBody = document.querySelector(`#${oeuf} tbody`);
+            const tableBody = document.querySelector(`#${oeuf}-egg-pets tbody`);
             tableBody.innerHTML = '';  // Réinitialiser le contenu du tableau
 
             pets.forEach(pet => {
@@ -209,22 +191,18 @@
                 row.innerHTML = `
                     <td>${pet.name}</td>
                     <td>${pet.rarity}</td>
-                    <td>${pet.clickMultiplier}</td>
-                    <td>${pet.gemMultiplier}</td>
-                    <td><img src="https://robloxsell.com/images/${pet.image}.png" alt="${pet.name}" width="50"></td>
+                    <td>${pet.percentage}%</td>
+                    <td>${pet.clickMulti}</td>
+                    <td>${pet.gemMulti}</td>
+                    <td><img src="https://robloxsell.com/images/${pet.imageId}.png" alt="${pet.name}" width="50"></td>
                 `;
                 tableBody.appendChild(row);  // Ajouter la ligne au tableau
             });
         }
 
-        // Classer les pets par oeuf et mettre à jour les tableaux
-        const basicEggPets = petsData.filter(pet => pet.rarity === "Common");
-        const uncommonEggPets = petsData.filter(pet => pet.rarity === "Uncommon");
-        const legendaryEggPets = petsData.filter(pet => pet.rarity === "Legendary");
-
-        updatePetsValues("basic-egg-pets", basicEggPets);
-        updatePetsValues("uncommon-egg-pets", uncommonEggPets);
-        updatePetsValues("legendary-egg-pets", legendaryEggPets);
+        // Mettre à jour les tableaux avec les données pour chaque œuf
+        updatePetsValues("basic", petsData["Basic"]);
+        updatePetsValues("uncommon", petsData["Uncommon"]);
     </script>
 
 </body>
