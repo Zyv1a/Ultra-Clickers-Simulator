@@ -113,11 +113,11 @@
     </header>
 
     <div class="content">
-        <!-- Tableau par oeuf -->
+        <!-- Tableau Oeuf de base -->
         <div class="values">
-            <h2>Oeuf 1: Pet Communs</h2>
+            <h2>Oeuf de Base</h2>
             <div class="values-container">
-                <table id="common-pets">
+                <table id="basic-egg-pets">
                     <thead>
                         <tr>
                             <th>Nom du Pet</th>
@@ -128,16 +128,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Les données des pets communs seront insérées ici -->
+                        <!-- Les données des pets de l'œuf de base -->
                     </tbody>
                 </table>
             </div>
         </div>
 
+        <!-- Tableau Oeuf Uncommon -->
         <div class="values">
-            <h2>Oeuf 2: Pet Uncommuns</h2>
+            <h2>Oeuf Uncommon</h2>
             <div class="values-container">
-                <table id="uncommon-pets">
+                <table id="uncommon-egg-pets">
                     <thead>
                         <tr>
                             <th>Nom du Pet</th>
@@ -148,16 +149,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Les données des pets uncommuns seront insérées ici -->
+                        <!-- Les données des pets de l'œuf Uncommon -->
                     </tbody>
                 </table>
             </div>
         </div>
 
+        <!-- Tableau Oeuf Légendaire -->
         <div class="values">
-            <h2>Oeuf 3: Pet Légendaires</h2>
+            <h2>Oeuf Légendaire</h2>
             <div class="values-container">
-                <table id="legendary-pets">
+                <table id="legendary-egg-pets">
                     <thead>
                         <tr>
                             <th>Nom du Pet</th>
@@ -168,7 +170,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Les données des pets légendaires seront insérées ici -->
+                        <!-- Les données des pets de l'œuf Légendaire -->
                     </tbody>
                 </table>
             </div>
@@ -182,13 +184,13 @@
     <script>
         // Définir les pets et leurs informations
         const petsData = [
-            // Oeuf Commun
+            // Oeuf de Base
             { name: "Dog", rarity: "Common", clickMultiplier: 1.1, gemMultiplier: 2, image: "12504462656" },
             { name: "Cat", rarity: "Common", clickMultiplier: 1.15, gemMultiplier: 3, image: "12504462303" },
             { name: "Pig", rarity: "Common", clickMultiplier: 1.25, gemMultiplier: 4, image: "12504461993" },
             { name: "Bunny", rarity: "Common", clickMultiplier: 1.4, gemMultiplier: 5, image: "12504462160" },
 
-            // Oeuf Uncommun
+            // Oeuf Uncommon
             { name: "Sheep", rarity: "Uncommon", clickMultiplier: 1.5, gemMultiplier: 2, image: "12504461794" },
             { name: "Goat", rarity: "Uncommon", clickMultiplier: 1.6, gemMultiplier: 3, image: "12504461590" },
             { name: "Cow", rarity: "Uncommon", clickMultiplier: 1.8, gemMultiplier: 4, image: "12504461434" },
@@ -216,13 +218,13 @@
         }
 
         // Classer les pets par oeuf et mettre à jour les tableaux
-        const commonPets = petsData.filter(pet => pet.rarity === "Common").sort((a, b) => a.name.localeCompare(b.name));
-        const uncommonPets = petsData.filter(pet => pet.rarity === "Uncommon").sort((a, b) => a.name.localeCompare(b.name));
-        const legendaryPets = petsData.filter(pet => pet.rarity === "Legendary").sort((a, b) => a.name.localeCompare(b.name));
+        const basicEggPets = petsData.filter(pet => pet.rarity === "Common");
+        const uncommonEggPets = petsData.filter(pet => pet.rarity === "Uncommon");
+        const legendaryEggPets = petsData.filter(pet => pet.rarity === "Legendary");
 
-        updatePetsValues("common-pets", commonPets);
-        updatePetsValues("uncommon-pets", uncommonPets);
-        updatePetsValues("legendary-pets", legendaryPets);
+        updatePetsValues("basic-egg-pets", basicEggPets);
+        updatePetsValues("uncommon-egg-pets", uncommonEggPets);
+        updatePetsValues("legendary-egg-pets", legendaryEggPets);
     </script>
 
 </body>
