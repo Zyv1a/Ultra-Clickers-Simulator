@@ -124,8 +124,10 @@
                     <thead>
                         <tr>
                             <th>Nom du Pet</th>
-                            <th>Valeur</th>
                             <th>Rareté</th>
+                            <th>Multiplicateur Clic</th>
+                            <th>Multiplicateur Gemmes</th>
+                            <th>Image</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -141,40 +143,37 @@
     </footer>
 
     <script>
-        const ws = new WebSocket('ws://127.0.0.1:3002');  // Changer localhost en 127.0.0.1
+        const petsData = [
+            { name: "Dog", rarity: "Common", clickMultiplier: 1.1, gemMultiplier: 2, image: "12504462656", shinyImage: "12558153383" },
+            { name: "Cat", rarity: "Common", clickMultiplier: 1.15, gemMultiplier: 3, image: "12504462303", shinyImage: "12558153150" },
+            { name: "Pig", rarity: "Common", clickMultiplier: 1.25, gemMultiplier: 4, image: "12504461993", shinyImage: "12558147926" },
+            { name: "Bunny", rarity: "Common", clickMultiplier: 1.4, gemMultiplier: 5, image: "12504462160", shinyImage: "12558152760" },
+            { name: "King Doggy", rarity: "Legendary", clickMultiplier: 150, gemMultiplier: 100, image: "12509197097", shinyImage: "12509197097" },
+            { name: "Sheep", rarity: "Uncommon", clickMultiplier: 1.5, gemMultiplier: 2, image: "12504461794", shinyImage: "12558147382" },
+            { name: "Goat", rarity: "Uncommon", clickMultiplier: 1.6, gemMultiplier: 3, image: "12504461590", shinyImage: "12558147165" },
+            { name: "Cow", rarity: "Uncommon", clickMultiplier: 1.8, gemMultiplier: 4, image: "12504461434", shinyImage: "12558151779" },
+            { name: "Chicken", rarity: "Uncommon", clickMultiplier: 2.5, gemMultiplier: 5, image: "12504461225", shinyImage: "12558151603" },
+            { name: "Wind Elemental", rarity: "Uncommon", clickMultiplier: 4, gemMultiplier: 10, image: "12504461038", shinyImage: "12558151377" }
+        ];
 
-        ws.onopen = function() {
-            console.log("Connexion WebSocket établie.");
-        };
-
-        ws.onmessage = function(event) {
-            try {
-                const petsData = JSON.parse(event.data);  // Récupérer les données envoyées
-                console.log("Données reçues :", petsData);
-                if (petsData && Array.isArray(petsData.pets)) {
-                    updatePetsValues(petsData.pets);  // Mettre à jour le tableau avec les données
-                } else {
-                    console.error("Les données reçues ne contiennent pas les informations attendues.");
-                }
-            } catch (error) {
-                console.error("Erreur lors de la réception des données WebSocket :", error);
-            }
-        };
-
-        function updatePetsValues(pets) {
+        function updatePetsValues() {
             const tableBody = document.querySelector('#pets-values tbody');
             tableBody.innerHTML = '';  // Réinitialiser le contenu du tableau
 
-            pets.forEach(pet => {
+            petsData.forEach(pet => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${pet.name}</td>
-                    <td>${pet.value}</td>
                     <td>${pet.rarity}</td>
+                    <td>${pet.clickMultiplier}</td>
+                    <td>${pet.gemMultiplier}</td>
+                    <td><img src="https://robloxsell.com/images/${pet.image}.png" alt="${pet.name}" width="50"></td>
                 `;
                 tableBody.appendChild(row);  // Ajouter la ligne au tableau
             });
         }
+
+        updatePetsValues();  // Appel initial pour remplir le tableau avec les données
     </script>
 
 </body>
