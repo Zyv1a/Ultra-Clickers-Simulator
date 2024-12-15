@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Classements mondiaux pour Plane Simulator sur Roblox. Découvrez les meilleurs pilotes et leurs performances!">
+    <title>Classements Mondiaux - Plane Simulator</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #000000;
+            color: #33ff33;
+            padding: 40px 20px;
+            border-bottom: 3px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #33ff33;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .back-home:hover {
+            color: #ff6600;
+        }
+        .login-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .login-icon:hover {
+            transform: scale(1.1);
+        }
+        .content {
+            padding: 40px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .leaderboard {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .leaderboard h2 {
+            color: #ff6600;
+            font-size: 24px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .leaderboard table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .leaderboard th, .leaderboard td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #333;
+        }
+        .leaderboard th {
+            background-color: #333;
+        }
+        .leaderboard-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        footer {
+            background-color: #000000;
+            color: #33ff33;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 14px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="Plane.html" class="back-home">&#8962; Accueil</a>
+        <h1>Classements Mondiaux - Plane Simulator</h1>
+        <a href="user-info-plane.html">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Roblox_Logo_2017.png" alt="Roblox Logo" class="login-icon">
+        </a>
+    </header>
+
+    <div class="content">
+        <!-- Leaderboard 1 : Distance totale parcourue -->
+        <div class="leaderboard">
+            <h2>Meilleurs Pilotes - Distance Totale</h2>
+            <div class="leaderboard-container">
+                <table id="distance-leaderboard">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Nom du Pilote</th>
+                            <th>Distance (km)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Les données des classements seront insérées ici -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Leaderboard 2 : Temps en vol -->
+        <div class="leaderboard">
+            <h2>Meilleurs Pilotes - Temps en Vol</h2>
+            <div class="leaderboard-container">
+                <table id="time-leaderboard">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Nom du Pilote</th>
+                            <th>Temps (heures)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Les données des classements seront insérées ici -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Leaderboard 3 : Nombre d'atterrissages réussis -->
+        <div class="leaderboard">
+            <h2>Meilleurs Pilotes - Atterrissages Réussis</h2>
+            <div class="leaderboard-container">
+                <table id="landings-leaderboard">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Nom du Pilote</th>
+                            <th>Atterrissages</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Les données des classements seront insérées ici -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Plane Simulator | Tous droits réservés</p>
+    </footer>
+
+    <script>
+        const ws = new WebSocket('ws://127.0.0.1:3002');
+
+        ws.onopen = function() {
+            console.log("Connexion WebSocket établie.");
+        };
+
+        ws.onmessage = function(event) {
+            try {
+                const leaderboardData = JSON.parse(event.data);
+                console.log("Données reçues : ", leaderboardData);
+                if (leaderboardData && leaderboardData.distance && leaderboardData.time && leaderboardData.landings) {
+                    updateLeaderboardData(leaderboardData);
+                } else {
+                    console.error("Les données reçues ne contiennent pas les informations attendues.");
+                }
+            } catch (error) {
+                console.error("Erreur lors de la réception des données WebSocket : ", error);
+            }
+        };
+
+        function updateLeaderboardData(data) {
+            if (Array.isArray(data.distance)) {
+                updateLeaderboardTable('distance-leaderboard', data.distance);
+            } else {
+                console.error("Les données de distance sont manquantes ou mal formatées.");
+            }
+
+            if (Array.isArray(data.time)) {
+                updateLeaderboardTable('time-leaderboard', data.time);
+            } else {
+                console.error("Les données de temps sont manquantes ou mal formatées.");
+            }
+
+            if (Array.isArray(data.landings)) {
+                updateLeaderboardTable('landings-leaderboard', data.landings);
+            } else {
+                console.error("Les données des atterrissages sont manquantes ou mal formatées.");
+            }
+        }
+
+        function updateLeaderboardTable(leaderboardId, leaderboardData) {
+            const tableBody = document.querySelector(`#${leaderboardId} tbody`);
+            tableBody.innerHTML = '';
+
+            leaderboardData.forEach((entry, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${entry.playerName}</td>
+                    <td>${entry.score}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Achetez des avions et accessoires pour Plane Simulator sur Roblox.">
+    <title>Boutique - Plane Simulator</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #000000;
+            color: #33ff33;
+            padding: 40px 20px;
+            border-bottom: 3px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .back-home {
+            font-size: 20px;
+            color: #33ff33;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .back-home:hover {
+            color: #ff6600;
+        }
+        .cart-icon {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+        .content {
+            padding: 40px 20px;
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .category {
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 280px;
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .category h3 {
+            color: #ff6600;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .shop-item {
+            background-color: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .shop-item p {
+            margin: 0;
+        }
+        .shop-item button {
+            background-color: #ff6600;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+        .shop-item button:hover {
+            background-color: #e65c00;
+        }
+        .quantity-input {
+            width: 60px;
+            padding: 5px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: #fff;
+        }
+        footer {
+            background-color: #000000;
+            color: #33ff33;
+            text-align: center;
+            padding: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="Clicks.html" class="back-home">&#8962; Accueil</a>
+    <h1>Boutique - Plane Simulator</h1>
+    <a href="cart-plane.html">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Shopping_cart_font_awesome.svg" alt="Panier" class="cart-icon">
+    </a>
+</header>
+
+<div class="content">
+    <!-- Catégorie Avions -->
+    <div class="category">
+        <h3>Avions</h3>
+        <div class="shop-item">
+            <p><strong>Avion de Chasse</strong></p>
+            <p>Prix : 1500 euros</p>
+            <input type="number" class="quantity-input" id="jet-quantity" value="1" min="1" />
+            <button onclick="addItemToCart('Avion de Chasse', 1500, document.getElementById('jet-quantity').value)">Ajouter au panier</button>
+        </div>
+        <div class="shop-item">
+            <p><strong>Avion Cargo</strong></p>
+            <p>Prix : 3000 euros</p>
+            <input type="number" class="quantity-input" id="cargo-quantity" value="1" min="1" />
+            <button onclick="addItemToCart('Avion Cargo', 3000, document.getElementById('cargo-quantity').value)">Ajouter au panier</button>
+        </div>
+    </div>
+
+    <!-- Catégorie Accessoires -->
+    <div class="category">
+        <h3>Accessoires</h3>
+        <div class="shop-item">
+            <p><strong>Moteur Turbo</strong></p>
+            <p>Prix : 500 euros</p>
+            <input type="number" class="quantity-input" id="engine-quantity" value="1" min="1" />
+            <button onclick="addItemToCart('Moteur Turbo', 500, document.getElementById('engine-quantity').value)">Ajouter au panier</button>
+        </div>
+    </div>
+
+    <!-- Catégorie Monnaies -->
+    <div class="category">
+        <h3>Monnaies</h3>
+        <div class="shop-item">
+            <p><strong>1000 Crédits</strong></p>
+            <p>Prix : 10 euros</p>
+            <input type="number" class="quantity-input" id="credits-quantity" value="1" min="1" />
+            <button onclick="addItemToCart('1000 Crédits', 10, document.getElementById('credits-quantity').value)">Ajouter au panier</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Plane Simulator | Tous droits réservés</p>
+</footer>
+
+<script>
+    // Fonction pour ajouter un article au panier avec la quantité spécifiée
+    function addItemToCart(name, price, quantity) {
+        let cart = JSON.parse(localStorage.getItem('cart')) || []; // Récupérer le panier depuis localStorage ou créer un tableau vide
+        quantity = parseInt(quantity, 10); // Convertir la quantité en entier
+
+        // Vérifier si l'article existe déjà dans le panier
+        const existingItem = cart.find(item => item.name === name);
+        if (existingItem) {
+            existingItem.quantity += quantity; // Si l'article existe, on augmente la quantité
+        } else {
+            // Sinon, on ajoute un nouvel article avec la quantité spécifiée
+            const item = { name, price, quantity };
+            cart.push(item);
+        }
+
+        // Sauvegarder le panier dans localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert(`${quantity} ${name}(s) a/ont été ajouté(s) à votre panier !`);
+    }
+</script>
+
+</body>
+</html>
