@@ -84,7 +84,7 @@
     </footer>
 
     <script>
-        // Définition des pets
+                // Définition des pets
         const pets = {
             "Basic": [
                 { name: "Dog", rarity: 1, percentage: 49.999, clickMulti: 1.1, gemMulti: 2, imageId: 12504462656 },
@@ -127,13 +127,12 @@
             ]
         };
 
-        // Fonction pour afficher les pets sur la page
         function afficherPets() {
             const container = document.getElementById('pets-container');
             for (const category in pets) {
                 const categoryDiv = document.createElement('div');
                 categoryDiv.classList.add('category');
-                
+
                 const title = document.createElement('h2');
                 title.textContent = category;
                 categoryDiv.appendChild(title);
