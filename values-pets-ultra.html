@@ -5,8 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Valeurs des pets pour Ultra Clickers Simulator">
     <title>Ultra Clickers Simulator - Pets</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #555;
+        }
+
+        .category {
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+
+        .pets-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .pet-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            text-align: center;
+            padding: 15px;
+            transition: transform 0.3s;
+        }
+
+        .pet-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pet-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .pet-card h3 {
+            margin: 10px 0 5px;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .pet-card p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #555;
+            color: white;
+        }
+    </style>
 </head>
 <body>
+    <h1>Ultra Clickers Simulator - Liste des Pets</h1>
+
+    <div id="pets-container"></div>
+
+    <footer>
+        &copy; 2024 Ultra Clickers Simulator - Tous droits réservés.
+    </footer>
+
     <script>
         // Définition des pets
         const pets = {
@@ -23,17 +99,74 @@
                 { name: "Cow", rarity: 3, percentage: 15, clickMulti: 1.8, gemMulti: 4, imageId: 12504461434 },
                 { name: "Chicken", rarity: 4, percentage: 4, clickMulti: 2.5, gemMulti: 5, imageId: 12504461225 },
                 { name: "Wind Elemental", rarity: 5, percentage: 1, clickMulti: 4, gemMulti: 10, imageId: 12504461038 }
+            ],
+            "Samurai": [
+                { name: "Samurai Dog", rarity: 1, percentage: 49.9, clickMulti: 5, gemMulti: 2, imageId: 12509307815 },
+                { name: "Samurai Cat", rarity: 2, percentage: 30, clickMulti: 10, gemMulti: 3, imageId: 12509307680 },
+                { name: "Panda", rarity: 3, percentage: 15, clickMulti: 15, gemMulti: 4, imageId: 12509307515 },
+                { name: "Samurai Dragon", rarity: 4, percentage: 4, clickMulti: 20, gemMulti: 5, imageId: 12509307330 },
+                { name: "Samurai Ninja", rarity: 5, percentage: 1, clickMulti: 35, gemMulti: 10, imageId: 12509315805 },
+                { name: "Samurai Overlord", rarity: 6, percentage: 0.1, clickMulti: 50, gemMulti: 25, imageId: 12499861917 }
+            ],
+            "Ancient": [
+                { name: "Scorpion", rarity: 1, percentage: 49.95, clickMulti: 20, gemMulti: 2, imageId: 12724674326 },
+                { name: "Mummy", rarity: 2, percentage: 30, clickMulti: 25, gemMulti: 3, imageId: 12724543069 },
+                { name: "Ancient Hedgehog", rarity: 3, percentage: 15, clickMulti: 35, gemMulti: 4, imageId: 12724542918 },
+                { name: "Cactus", rarity: 4, percentage: 4, clickMulti: 50, gemMulti: 5, imageId: 12724542701 },
+                { name: "Sand Phoenix", rarity: 5, percentage: 1, clickMulti: 65, gemMulti: 10, imageId: 12724542477 },
+                { name: "Ancient Overlord", rarity: 6, percentage: 0.05, clickMulti: 100, gemMulti: 25, imageId: 12724542344 }
+            ],
+            "Cyber": [
+                { name: "Cyber Dog", rarity: 1, percentage: 49.949, clickMulti: 40, gemMulti: 2, imageId: 12724542173 },
+                { name: "Cyber Bunny", rarity: 2, percentage: 30, clickMulti: 75, gemMulti: 3, imageId: 12724682930 },
+                { name: "Cyber Cat", rarity: 3, percentage: 15, clickMulti: 100, gemMulti: 4, imageId: 12724562403 },
+                { name: "T-27 Robot", rarity: 4, percentage: 4.5, clickMulti: 150, gemMulti: 5, imageId: 12724562222 },
+                { name: "Cyber Elemental", rarity: 5, percentage: 0.5, clickMulti: 200, gemMulti: 10, imageId: 12724561934 },
+                { name: "Cyber Overlord", rarity: 6, percentage: 0.05, clickMulti: 375, gemMulti: 25, imageId: 12724700464 },
+                { name: "Terminator", rarity: 7, percentage: 0.001, clickMulti: 1500, gemMulti: 100, imageId: 12724541934 }
             ]
         };
 
-        // Fonction pour afficher les pets
+        // Fonction pour afficher les pets sur la page
         function afficherPets() {
-            for (const catégorie in pets) {
-                console.log(`Catégorie: ${catégorie}`);
-                const petCategory = pets[catégorie];
-                petCategory.forEach(pet => {
-                    console.log(`Nom: ${pet.name}, Rareté: ${pet.rarity}, Multiplier clic: ${pet.clickMulti}, Image: ${pet.imageId}`);
+            const container = document.getElementById('pets-container');
+            for (const category in pets) {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.classList.add('category');
+                
+                const title = document.createElement('h2');
+                title.textContent = category;
+                categoryDiv.appendChild(title);
+
+                const petsContainer = document.createElement('div');
+                petsContainer.classList.add('pets-container');
+
+                pets[category].forEach(pet => {
+                    const petCard = document.createElement('div');
+                    petCard.classList.add('pet-card');
+
+                    const petImage = document.createElement('img');
+                    petImage.src = `https://roblox.com/asset/?id=${pet.imageId}`;
+                    petImage.alt = pet.name;
+
+                    const petName = document.createElement('h3');
+                    petName.textContent = pet.name;
+
+                    const petDetails = document.createElement('p');
+                    petDetails.innerHTML = `
+                        Rareté: ${pet.rarity} <br>
+                        Pourcentage: ${pet.percentage}% <br>
+                        Clic x${pet.clickMulti} | Gem x${pet.gemMulti}
+                    `;
+
+                    petCard.appendChild(petImage);
+                    petCard.appendChild(petName);
+                    petCard.appendChild(petDetails);
+                    petsContainer.appendChild(petCard);
                 });
+
+                categoryDiv.appendChild(petsContainer);
+                container.appendChild(categoryDiv);
             }
         }
 
