@@ -1,5 +1,5 @@
 // URL de ton webhook Discord
-const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1326976373541044354/INnqRHZdL5125vHnrrOlMJ7ilSOa7NbTSlG7K55qy7DSrh2uJqeRKSlXz20UeDOin5Jl";
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1326977577889435658/fH3JMXheYvi2VvCyuJqoMBJHv4WjC-_yg_HkjjJhpnCvk_E73rI7TaX8NeUJIXTY04ZF";
 
 // Fonction pour envoyer une alerte au webhook Discord
 function sendDiscordAlert(message) {
